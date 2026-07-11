@@ -272,12 +272,12 @@ function Nav() {
                 <a href="#contact" onClick={(e) => { e.preventDefault(); smoothScrollTo("#contact"); }}>Book free strategy call <ArrowRight className="ml-2 h-4 w-4" /></a>
               </Button>
               <div className="flex flex-col gap-3 text-sm text-foreground/70 sm:flex-row sm:items-center sm:justify-between sm:text-xs">
-                <a href="mailto:kamalkumarsinduriya89@gmail.com" className="flex min-w-0 items-center gap-2 hover:text-foreground">
+                <a href="mailto:explisoft@gmail.com" className="flex min-w-0 items-center gap-2 hover:text-foreground">
                   <Mail className="h-4 w-4 shrink-0" />
-                  <span className="truncate">kamalkumarsinduriya89@gmail.com</span>
+                  <span className="truncate">explisoft@gmail.com</span>
                 </a>
-                <a href="tel:+917004800558" className="flex items-center gap-2 hover:text-foreground">
-                  <Phone className="h-4 w-4 shrink-0" /> +91 7004800558
+                <a href="tel:+918789332857" className="flex items-center gap-2 hover:text-foreground">
+                  <Phone className="h-4 w-4 shrink-0" /> +91 8789332857
                 </a>
               </div>
             </motion.div>
@@ -1038,8 +1038,8 @@ function Contact() {
             </p>
             <div className="mt-8 space-y-4">
               {[
-                { i: Phone, t: "Call us", v: "+91 7004800558", href: "tel:+917004800558" },
-                { i: Mail, t: "Email", v: "kamalkumarsinduriya89@gmail.com", href: "mailto:kamalkumarsinduriya89@gmail.com" },
+                { i: Phone, t: "Call us", v: "+91 8789332857", href: "tel:+918789332857" },
+                { i: Mail, t: "Email", v: "explisoft@gmail.com", href: "mailto:explisoft@gmail.com" },
                 { i: MapPin, t: "Office", v: "Laxmi Nagar, Delhi, India" },
                 { i: Clock, t: "Hours", v: "Mon – Sat · 10am – 8pm IST" },
               ].map((c, i) => {
@@ -1221,7 +1221,7 @@ function FooterCol({ title, links }: { title: string; links: string[] }) {
 
 /* ---------------- Floating contacts + back to top ---------------- */
 function FloatingContacts() {
-  const phone = "+917004800558";
+  const phone = "+918789332857";
   const waMsg = encodeURIComponent("Hi Explisoft, I'd like to book a free strategy call.");
   return (
     <div className="fixed bottom-4 left-4 z-50 flex flex-col gap-2 sm:bottom-6 sm:left-6 sm:gap-3">
