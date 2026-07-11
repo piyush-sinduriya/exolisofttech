@@ -279,6 +279,9 @@ function Nav() {
                 <a href="tel:+918789332857" className="flex items-center gap-2 hover:text-foreground">
                   <Phone className="h-4 w-4 shrink-0" /> +91 8789332857
                 </a>
+                <a href="tel:+917004800558" className="flex items-center gap-2 hover:text-foreground">
+                  <Phone className="h-4 w-4 shrink-0" /> +91 7004800558
+                </a>
               </div>
             </motion.div>
           </motion.nav>
@@ -1039,6 +1042,7 @@ function Contact() {
             <div className="mt-8 space-y-4">
               {[
                 { i: Phone, t: "Call us", v: "+91 8789332857", href: "tel:+918789332857" },
+                { i: Phone, t: "Call us", v: "+91 7004800558", href: "tel:+917004800558" },
                 { i: Mail, t: "Email", v: "explisoft@gmail.com", href: "mailto:explisoft@gmail.com" },
                 { i: MapPin, t: "Office", v: "Laxmi Nagar, Delhi, India" },
                 { i: Clock, t: "Hours", v: "Mon – Sat · 10am – 8pm IST" },
@@ -1221,13 +1225,14 @@ function FooterCol({ title, links }: { title: string; links: string[] }) {
 
 /* ---------------- Floating contacts + back to top ---------------- */
 function FloatingContacts() {
-  const phone = "+918789332857";
+  const phone1 = "+918789332857";
+  const phone2 = "+917004800558";
   const waMsg = encodeURIComponent("Hi Explisoft, I'd like to book a free strategy call.");
   return (
     <div className="fixed bottom-4 left-4 z-50 flex flex-col gap-2 sm:bottom-6 sm:left-6 sm:gap-3">
       <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}
         className="group relative flex items-center">
-        <a href={`https://wa.me/${phone.replace(/\D/g, "")}?text=${waMsg}`} target="_blank" rel="noopener noreferrer"
+        <a href={`https://wa.me/${phone1.replace(/\D/g, "")}?text=${waMsg}`} target="_blank" rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
           className="relative grid h-11 w-11 sm:h-14 sm:w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-glow transition-transform hover:scale-108 active:scale-95">
           <span className="absolute inset-0 animate-ping rounded-full bg-[#25D366] opacity-40" />
@@ -1236,7 +1241,7 @@ function FloatingContacts() {
       </motion.div>
       <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.55 }}
         className="group relative flex items-center">
-        <a href={`tel:${phone}`} aria-label="Call us"
+        <a href={`tel:${phone1}`} aria-label="Call us"
           className="relative grid h-11 w-11 sm:h-14 sm:w-14 place-items-center rounded-full bg-gradient-brand text-white shadow-glow transition-transform hover:scale-108 active:scale-95">
           <span className="absolute inset-0 animate-ping rounded-full bg-[color:var(--primary)] opacity-30" />
           <Phone className="relative h-5 w-5 sm:h-6 sm:w-6" />
