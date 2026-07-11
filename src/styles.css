@@ -1,0 +1,197 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Hide Lovable badge (parent container + any child button/text) */
+#lovable-badge,
+#lovable-badge *,
+[id^="lovable-badge"],
+a[href*="lovable.dev"][target="_blank"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-violet: var(--violet);
+  --color-cyan: var(--cyan);
+  --color-magenta: var(--magenta);
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 1rem;
+
+  /* Explisoft brand — deep space with violet→cyan iridescence */
+  --background: oklch(0.14 0.03 275);
+  --foreground: oklch(0.98 0.01 260);
+  --card: oklch(0.19 0.035 275);
+  --card-foreground: oklch(0.98 0.01 260);
+  --popover: oklch(0.17 0.035 275);
+  --popover-foreground: oklch(0.98 0.01 260);
+  /* Sampled from Explisoft logo: royal blue #0032FA + purple/magenta atom */
+  --primary: oklch(0.48 0.29 268);            /* logo royal blue */
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.24 0.05 280);
+  --secondary-foreground: oklch(0.98 0.01 260);
+  --muted: oklch(0.22 0.03 280);
+  --muted-foreground: oklch(0.72 0.03 265);
+  --accent: oklch(0.57 0.24 320);             /* logo magenta */
+  --accent-foreground: oklch(0.14 0.03 280);
+  --destructive: oklch(0.65 0.24 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.48 0.29 268 / 60%);
+
+  --blue: oklch(0.48 0.29 268);
+  --violet: oklch(0.47 0.27 293);
+  --magenta: oklch(0.57 0.24 320);
+  --cyan: oklch(0.57 0.24 320);
+
+  /* Blue → violet → magenta sweep, matching the logo mark */
+  --gradient-brand: linear-gradient(135deg, oklch(0.48 0.29 268) 0%, oklch(0.47 0.27 293) 55%, oklch(0.57 0.24 320) 100%);
+  --gradient-hero: radial-gradient(1200px 600px at 15% 10%, oklch(0.48 0.29 268 / 0.38), transparent 60%),
+                    radial-gradient(900px 500px at 90% 20%, oklch(0.57 0.24 320 / 0.30), transparent 65%),
+                    radial-gradient(700px 500px at 60% 95%, oklch(0.47 0.27 293 / 0.22), transparent 60%);
+  --shadow-glow: 0 20px 60px -20px oklch(0.48 0.29 268 / 0.6);
+  --shadow-soft: 0 10px 40px -10px oklch(0 0 0 / 0.6);
+
+  --chart-1: oklch(0.48 0.29 268);
+  --chart-2: oklch(0.57 0.24 320);
+  --chart-3: oklch(0.47 0.27 293);
+  --chart-4: oklch(0.82 0.19 84);
+  --chart-5: oklch(0.65 0.2 300);
+  --sidebar: oklch(0.17 0.035 280);
+  --sidebar-foreground: oklch(0.98 0.01 260);
+  --sidebar-primary: oklch(0.48 0.29 268);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.24 0.05 280);
+  --sidebar-accent-foreground: oklch(0.98 0.01 260);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.48 0.29 268 / 60%);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  section[id] {
+    scroll-margin-top: 90px;
+  }
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@utility text-gradient {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-gradient-brand {
+  background: var(--gradient-brand);
+}
+
+@utility bg-hero-glow {
+  background: var(--gradient-hero);
+}
+
+@utility glass {
+  background: color-mix(in oklab, var(--card) 55%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in oklab, white 8%, transparent);
+}
+
+@utility shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@utility animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes float-slow {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-24px) rotate(4deg); }
+}
+@utility animate-float {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@utility animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
