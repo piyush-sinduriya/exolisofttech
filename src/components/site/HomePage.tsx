@@ -295,6 +295,7 @@ function Nav() {
 function MagneticButton({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const onMove = (e: React.MouseEvent) => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const el = ref.current; if (!el) return;
     const r = el.getBoundingClientRect();
     const x = e.clientX - r.left - r.width / 2;
@@ -302,7 +303,7 @@ function MagneticButton({ children }: { children: React.ReactNode }) {
     el.style.transform = `translate(${x * 0.2}px, ${y * 0.3}px)`;
   };
   const reset = () => { if (ref.current) ref.current.style.transform = "translate(0,0)"; };
-  return <div ref={ref} onMouseMove={onMove} onMouseLeave={reset} className="inline-block transition-transform duration-300">{children}</div>;
+  return <div ref={ref} onMouseMove={onMove} onMouseLeave={reset} className="block w-full sm:inline-block sm:w-auto transition-transform duration-300">{children}</div>;
 }
 
 function Counter({ to, decimals = 0 }: { to: number; decimals?: number }) {
