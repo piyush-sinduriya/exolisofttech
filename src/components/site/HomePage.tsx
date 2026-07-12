@@ -326,12 +326,12 @@ function Counter({ to, decimals = 0 }: { to: number; decimals?: number }) {
 
 function SectionHeader({ eyebrow, title, sub }: { eyebrow: string; title: React.ReactNode; sub?: string }) {
   return (
-    <div data-reveal className="mx-auto mb-16 max-w-3xl text-center">
+    <div data-reveal className="mx-auto mb-10 sm:mb-16 max-w-3xl text-center">
       <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-[10px] uppercase tracking-[0.25em] text-foreground/70">
         <Sparkles className="h-3 w-3 text-[color:var(--cyan)]" /> {eyebrow}
       </div>
-      <h2 className="mt-5 text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">{title}</h2>
-      {sub && <p className="mt-5 text-lg text-foreground/60">{sub}</p>}
+      <h2 className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">{title}</h2>
+      {sub && <p className="mt-5 text-base sm:text-lg text-foreground/60">{sub}</p>}
     </div>
   );
 }
@@ -439,15 +439,15 @@ function Hero() {
           <div ref={imgWrap} className="relative w-full max-w-[340px] sm:max-w-[460px] lg:max-w-[560px] will-change-transform">
             <img src={heroVisual} alt="Explisoft growth dashboard" width={1024} height={1024}
               className="h-auto w-full drop-shadow-[0_30px_60px_rgba(0,50,250,0.35)]" />
-            <div className="glass absolute left-1 sm:-left-8 top-6 sm:top-10 flex items-center gap-2 rounded-2xl px-2.5 py-1.5 sm:px-3 sm:py-2 text-[10px] sm:text-xs shadow-glow">
+            <div className="glass absolute left-3 sm:-left-8 top-6 sm:top-10 flex items-center gap-2 rounded-2xl px-2 py-1 sm:px-3 sm:py-2 text-[10px] sm:text-xs shadow-glow">
               <TrendingUp className="h-4 w-4 text-[color:var(--cyan)]" />
               <span><b>+185%</b> leads</span>
             </div>
-            <div className="glass absolute right-1 sm:-right-6 top-1/3 flex items-center gap-2 rounded-2xl px-2.5 py-1.5 sm:px-3 sm:py-2 text-[10px] sm:text-xs shadow-glow">
+            <div className="glass absolute right-3 sm:-right-6 top-1/3 flex items-center gap-2 rounded-2xl px-2 py-1 sm:px-3 sm:py-2 text-[10px] sm:text-xs shadow-glow">
               <Star className="h-4 w-4 text-[color:var(--magenta)]" />
               <span><b>4.9/5</b> rated</span>
             </div>
-            <div className="glass absolute -bottom-2 sm:-bottom-4 left-4 sm:left-6 flex items-center gap-2 rounded-2xl px-2.5 py-1.5 sm:px-3 sm:py-2 text-[10px] sm:text-xs shadow-glow">
+            <div className="glass absolute -bottom-2 sm:-bottom-4 left-4 sm:left-6 flex items-center gap-2 rounded-2xl px-2 py-1 sm:px-3 sm:py-2 text-[10px] sm:text-xs shadow-glow">
               <Zap className="h-4 w-4 text-[color:var(--cyan)]" />
               <span>14-day delivery</span>
             </div>
@@ -498,7 +498,7 @@ function Problem() {
     "Manual processes consuming valuable time",
   ];
   return (
-    <section id="problem" className="relative py-32">
+    <section id="problem" className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader eyebrow="The problem"
           title={<>Is your business <span className="text-gradient">losing customers online?</span></>}
@@ -532,7 +532,7 @@ function Imagine() {
     "Sales grow while your business runs more efficiently",
   ];
   return (
-    <section className="relative py-32">
+    <section className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader eyebrow="Imagine instead"
           title={<>The digital presence <span className="text-gradient">you deserve.</span></>}
@@ -585,7 +585,7 @@ const SERVICES = [
 ];
 function Services() {
   return (
-    <section id="services" className="relative py-32">
+    <section id="services" className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeader eyebrow="What we do"
           title={<>Complete digital solutions, <span className="text-gradient">under one roof.</span></>}
@@ -596,7 +596,7 @@ function Services() {
             return (
               <motion.div key={s.t} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 transition={{ duration: 0.55, delay: (i % 2) * 0.08 }}
-                className="group relative overflow-hidden rounded-3xl glass p-8 transition hover:-translate-y-1 hover:shadow-glow">
+                className="group relative overflow-hidden rounded-3xl glass p-6 sm:p-8 transition hover:-translate-y-1 hover:shadow-glow">
                 <div className="absolute inset-0 -z-10 opacity-0 transition group-hover:opacity-100"
                   style={{ background: "radial-gradient(500px 240px at 50% 0%, oklch(0.47 0.28 285 / 0.32), transparent 60%)" }} />
                 <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-brand text-white shadow-glow">
@@ -627,13 +627,13 @@ function WhyUs() {
   const others = ["Generic templates", "Slow communication", "Design only", "No growth strategy", "Launch and disappear"];
   const us = ["Revenue-focused strategy", "Custom design & development", "Dedicated project manager", "Marketing expertise", "Long-term partnership", "Ongoing support"];
   return (
-    <section id="why" className="relative py-32">
+    <section id="why" className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader eyebrow="Why choose us"
           title={<>Most agencies build websites. <br /><span className="text-gradient">We build businesses.</span></>} />
         <div className="grid gap-6 md:grid-cols-2">
           <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-            transition={{ duration: 0.6 }} className="rounded-3xl border border-white/5 bg-white/[0.02] p-8">
+            transition={{ duration: 0.6 }} className="rounded-3xl border border-white/5 bg-white/[0.02] p-6 sm:p-8">
             <div className="text-xs uppercase tracking-[0.25em] text-foreground/40">Other agencies</div>
             <div className="mt-2 text-xl font-semibold text-foreground/70">The typical experience</div>
             <ul className="mt-6 space-y-4">
@@ -648,7 +648,7 @@ function WhyUs() {
             </ul>
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-            transition={{ duration: 0.6 }} className="relative overflow-hidden rounded-3xl p-8 shadow-glow"
+            transition={{ duration: 0.6 }} className="relative overflow-hidden rounded-3xl p-6 sm:p-8 shadow-glow"
             style={{ background: "linear-gradient(135deg, oklch(0.48 0.29 268 / 0.18), oklch(0.57 0.24 320 / 0.14))" }}>
             <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gradient-brand opacity-30 blur-3xl" />
             <div className="text-xs uppercase tracking-[0.25em] text-[color:var(--cyan)]">Our team</div>
@@ -681,7 +681,7 @@ const STEPS = [
 ];
 function Process() {
   return (
-    <section id="process" className="relative py-32">
+    <section id="process" className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeader eyebrow="Our proven process"
           title={<>Live in <span className="text-gradient">14 days.</span></>}
@@ -722,7 +722,7 @@ function Results() {
     { i: Award, t: "Stronger brand authority" },
   ];
   return (
-    <section id="results" className="relative py-32">
+    <section id="results" className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader eyebrow="Results that matter"
           title={<>What our clients <span className="text-gradient">experience.</span></>} />
@@ -752,14 +752,14 @@ const CASES = [
 ];
 function SuccessStories() {
   return (
-    <section className="relative py-32">
+    <section className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeader eyebrow="Success stories"
           title={<>Numbers that <span className="text-gradient">move the needle.</span></>} />
         <div className="grid gap-6 lg:grid-cols-3">
           {CASES.map((c, i) => (
             <motion.div key={c.brand} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.08 }} className="glass rounded-3xl p-8">
+              transition={{ duration: 0.6, delay: i * 0.08 }} className="glass rounded-3xl p-6 sm:p-8">
               <div className="text-[10px] uppercase tracking-[0.25em] text-foreground/40">{c.cat}</div>
               <h3 className="mt-1 text-2xl font-semibold">{c.brand}</h3>
               <div className="mt-8 grid grid-cols-3 gap-3 border-t border-white/5 pt-6">
@@ -789,10 +789,10 @@ function Testimonials() {
   useEffect(() => { const t = setInterval(() => setI(v => (v + 1) % TESTS.length), 6000); return () => clearInterval(t); }, []);
   const t = TESTS[i];
   return (
-    <section className="relative py-32">
+    <section className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHeader eyebrow="What clients say" title={<>Loved by <span className="text-gradient">founders & owners.</span></>} />
-        <div className="glass relative overflow-hidden rounded-3xl p-10 sm:p-14">
+        <div className="glass relative overflow-hidden rounded-3xl p-6 sm:p-14">
           <div className="mb-6 flex gap-1">
             {Array.from({ length: 5 }).map((_, k) => <Star key={k} className="h-4 w-4 fill-[color:var(--cyan)] text-[color:var(--cyan)]" />)}
           </div>
@@ -825,7 +825,7 @@ function Testimonials() {
 function Included() {
   const items = ["Strategy workshop", "Custom design", "Responsive development", "Mobile optimization", "Basic SEO", "Speed optimization", "Analytics integration", "SSL security", "CMS training", "Launch support"];
   return (
-    <section className="relative py-32">
+    <section className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeader eyebrow="Every project includes"
           title={<>No surprises. <span className="text-gradient">Just outcomes.</span></>} />
@@ -860,7 +860,7 @@ const PLANS = [
 ];
 function Pricing() {
   return (
-    <section id="pricing" className="relative py-32">
+    <section id="pricing" className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeader eyebrow="Pricing"
           title={<>Premium websites, <span className="text-gradient">honest pricing.</span></>}
@@ -869,7 +869,7 @@ function Pricing() {
           {PLANS.map((pl, i) => (
             <motion.div key={pl.n} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className={`relative overflow-hidden rounded-3xl p-8 transition ${pl.featured ? "bg-gradient-brand text-white shadow-glow lg:scale-[1.03]" : "glass hover:-translate-y-1"}`}>
+              className={`relative overflow-hidden rounded-3xl p-6 sm:p-8 transition ${pl.featured ? "bg-gradient-brand text-white shadow-glow lg:scale-[1.03]" : "glass hover:-translate-y-1"}`}>
               {pl.featured && (
                 <div className="absolute right-5 top-5 rounded-full bg-black/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest">
                   Most popular
@@ -921,7 +921,7 @@ function Commitment() {
     { i: TrendingUp, t: "Just measurable results" },
   ];
   return (
-    <section className="relative py-32">
+    <section className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 text-center">
         <div data-reveal className="mx-auto mb-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-[10px] uppercase tracking-[0.25em] text-foreground/70">
@@ -959,7 +959,7 @@ const FAQS = [
 ];
 function FAQ() {
   return (
-    <section id="faq" className="relative py-32">
+    <section id="faq" className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <SectionHeader eyebrow="FAQ" title={<>Frequently asked <span className="text-gradient">questions.</span></>} />
         <Accordion type="single" collapsible className="w-full">
@@ -1023,7 +1023,7 @@ function Contact() {
     }
   };
   return (
-    <section id="contact" className="relative py-32">
+    <section id="contact" className="relative py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-5">
           <div className="lg:col-span-2">
@@ -1118,9 +1118,9 @@ function Contact() {
 /* ---------------- Final CTA ---------------- */
 function CTA() {
   return (
-    <section className="relative py-24">
+    <section className="relative py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="relative overflow-hidden rounded-3xl p-10 sm:p-16 text-center">
+        <div className="relative overflow-hidden rounded-3xl p-6 sm:p-16 text-center">
           <div className="absolute inset-0 -z-10 bg-gradient-brand animate-gradient" />
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(600px_200px_at_50%_100%,rgba(0,0,0,0.4),transparent)]" />
           <Award className="mx-auto h-8 w-8 text-white/80" />
@@ -1158,9 +1158,9 @@ function Footer() {
     }
   };
   return (
-    <footer className="border-t border-white/5 pt-20">
+    <footer className="border-t border-white/5 pt-12 sm:pt-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="grid gap-10 lg:grid-cols-5">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <img src={logo} alt="Explisoft" className="h-10 w-auto" />
             <p className="mt-5 max-w-sm text-sm text-foreground/60">
