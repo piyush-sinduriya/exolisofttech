@@ -38,7 +38,36 @@ export const submitContact = createServerFn({ method: "POST" })
       at: timestamp,
     });
 
-    // Send email notification via Resend
+    // 1. Google Sheets + Apps Script Integration (SMTP-free way using user's Gmail account)
+    const googleSheetUrl = process.env.GOOGLE_SHEET_WEBAPP_URL;
+    if (googleSheetUrl) {
+      try {
+        const response = await fetch(googleSheetUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            mobile: data.mobile,
+            company: data.company,
+            service: data.service,
+            budget: data.budget,
+            message: data.message,
+          }),
+        });
+        const resJson = await response.json() as { ok: boolean; submissionId?: string; error?: string };
+        if (resJson && resJson.ok) {
+          console.log("[contact] lead successfully processed by Google Sheet Script:", resJson.submissionId);
+          return { ok: true as const, submissionId: resJson.submissionId || submissionId, receivedAt: timestamp };
+        } else {
+          console.error("[contact] Google Sheet Script returned error:", resJson.error);
+        }
+      } catch (err) {
+        console.error("[contact] Google Sheet WebApp request failed, falling back to Resend:", err);
+      }
+    }
+
+    // 2. Send email notification via Resend
     const resendApiKey = process.env.RESEND_API_KEY;
     if (resendApiKey) {
       try {
