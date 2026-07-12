@@ -276,11 +276,11 @@ function Nav() {
                   <Mail className="h-4 w-4 shrink-0" />
                   <span className="truncate">explisoft@gmail.com</span>
                 </a>
-                <a href="tel:+918789332857" className="flex items-center gap-2 hover:text-foreground">
-                  <Phone className="h-4 w-4 shrink-0" /> +91 8789332857
+                <a href="tel:+917283038128" className="flex items-center gap-2 hover:text-foreground">
+                  <Phone className="h-4 w-4 shrink-0" /> +91 7283038128
                 </a>
-                <a href="tel:+917004800558" className="flex items-center gap-2 hover:text-foreground">
-                  <Phone className="h-4 w-4 shrink-0" /> +91 7004800558
+                <a href="tel:+919650680558" className="flex items-center gap-2 hover:text-foreground">
+                  <Phone className="h-4 w-4 shrink-0" /> +91 9650680558
                 </a>
               </div>
             </motion.div>
@@ -1041,8 +1041,8 @@ function Contact() {
             </p>
             <div className="mt-8 space-y-4">
               {[
-                { i: Phone, t: "Call us", v: "+91 8789332857", href: "tel:+918789332857" },
-                { i: Phone, t: "Call us", v: "+91 7004800558", href: "tel:+917004800558" },
+                { i: Phone, t: "Call us", v: "+91 7283038128", href: "tel:+917283038128" },
+                { i: Phone, t: "Call us", v: "+91 9650680558", href: "tel:+919650680558" },
                 { i: Mail, t: "Email", v: "explisoft@gmail.com", href: "mailto:explisoft@gmail.com" },
                 { i: MapPin, t: "Office", v: "Laxmi Nagar, Delhi, India" },
                 { i: Clock, t: "Hours", v: "Mon – Sat · 10am – 8pm IST" },
@@ -1174,7 +1174,7 @@ function Footer() {
           </div>
           <FooterCol title="Services" links={["Website Development", "Mobile Apps", "AI Automation", "Digital Marketing"]} />
           <FooterCol title="Company" links={["Process", "Pricing", "FAQ", "Contact"]} />
-          <FooterCol title="Reach us" links={["+91 7004800558", "kamalkumarsinduriya89@gmail.com", "Laxmi Nagar, Delhi"]} />
+          <FooterCol title="Reach us" links={["+91 7283038128", "+91 9650680558", "kamalkumarsinduriya89@gmail.com", "Laxmi Nagar, Delhi"]} />
         </div>
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/5 py-8 text-xs text-foreground/50 sm:flex-row">
           <div>© {new Date().getFullYear()} Explisoft Technology. All rights reserved.</div>
@@ -1225,8 +1225,8 @@ function FooterCol({ title, links }: { title: string; links: string[] }) {
 
 /* ---------------- Floating contacts + back to top ---------------- */
 function FloatingContacts() {
-  const phone1 = "+918789332857";
-  const phone2 = "+917004800558";
+  const phone1 = "+917283038128";
+  const phone2 = "+919650680558";
   const waMsg = encodeURIComponent("Hi Explisoft, I'd like to book a free strategy call.");
   return (
     <div className="fixed bottom-4 left-4 z-50 flex flex-col gap-2 sm:bottom-6 sm:left-6 sm:gap-3">
