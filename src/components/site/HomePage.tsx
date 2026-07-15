@@ -378,7 +378,7 @@ function Hero() {
       <div className="pointer-events-none absolute right-[10%] top-[20%] h-32 w-32 rounded-full bg-accent/50 blur-2xl animate-float" style={{ animationDelay: "1s" }} />
 
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-8 w-full">
-        <div className="text-center lg:text-left">
+        <div className="order-2 lg:order-1 text-center lg:text-left">
           <div data-hero-badge className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-[10px] sm:text-xs uppercase tracking-[0.2em] text-foreground/80">
             <Sparkles className="h-3.5 w-3.5 text-[color:var(--cyan)]" /> Websites · Apps · AI · Marketing
           </div>
@@ -421,23 +421,9 @@ function Hero() {
           <p className="mt-3 text-xs text-foreground/50 lg:text-left text-center">
             No obligation · Free consultation · Custom growth roadmap
           </p>
-
-          <div id="trust" className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 border-t border-white/5 pt-6 sm:pt-8 sm:grid-cols-4 text-center lg:text-left">
-            {[
-              { n: 100, s: "+", l: "Projects" },
-              { n: 98, s: "%", l: "Satisfaction" },
-              { n: 5, s: "+ yrs", l: "Experience" },
-              { n: 1000, s: "+", l: "Leads generated" },
-            ].map((s, i) => (
-              <div key={i}>
-                <div className="text-xl font-bold sm:text-3xl"><Counter to={s.n} />{s.s}</div>
-                <div className="mt-1 text-[10px] uppercase tracking-widest text-foreground/50">{s.l}</div>
-              </div>
-            ))}
-          </div>
         </div>
 
-        <div className="relative flex items-center justify-center [perspective:1200px] w-full">
+        <div className="order-1 lg:order-2 relative flex items-center justify-center [perspective:1200px] w-full">
           <div className="pointer-events-none absolute inset-0 -z-10">
             <div className="absolute left-1/2 top-1/2 h-[280px] w-[280px] sm:h-[420px] sm:w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-brand opacity-30 blur-3xl" />
           </div>
@@ -1379,6 +1365,7 @@ function HomePageInner() {
       <Nav />
       <main>
         <Hero />
+        <TrustBar />
         <Problem />
         <Services />
         <Portfolio />
