@@ -1379,7 +1379,6 @@ function HomePageInner() {
       <Nav />
       <main>
         <Hero />
-        <TrustBar />
         <Problem />
         <Services />
         <Portfolio />
