@@ -72,7 +72,42 @@ export const submitContact = createServerFn({ method: "POST" })
       }
     }
 
-    // 2. Send email notification via Resend
+    // 2. Web3Forms Integration (Easy backup SMTP-free email delivery)
+    const web3formsAccessKey = process.env.WEB3FORMS_ACCESS_KEY || "4a4309c7-1846-4142-ba43-4547594f6e0f";
+    if (web3formsAccessKey) {
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+          body: JSON.stringify({
+            access_key: web3formsAccessKey,
+            subject: `🔔 New Website Lead: ${data.name} — ${data.service || "General Inquiry"}`,
+            from_name: "Explisoft Website",
+            name: data.name,
+            email: data.email,
+            mobile: data.mobile || "Not provided",
+            company: data.company || "Not provided",
+            service: data.service || "General Inquiry",
+            budget: data.budget || "Not specified",
+            message: data.message,
+            submission_id: sheetSubmissionId,
+          }),
+        });
+        const resJson = await response.json() as { success: boolean; message?: string };
+        if (resJson && resJson.success) {
+          console.log("[contact] lead successfully processed by Web3Forms");
+        } else {
+          console.error("[contact] Web3Forms returned error:", resJson.message);
+        }
+      } catch (err) {
+        console.error("[contact] Web3Forms request failed:", err);
+      }
+    }
+
+    // 3. Send email notification via Resend
     const resendApiKey = process.env.RESEND_API_KEY;
     if (resendApiKey) {
       try {
