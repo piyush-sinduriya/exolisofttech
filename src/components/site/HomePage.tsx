@@ -368,7 +368,7 @@ function Hero() {
   ];
 
   return (
-    <section id="top" ref={ref} className="relative min-h-[100svh] overflow-hidden pt-40 sm:pt-52 lg:pt-56">
+    <section id="top" ref={ref} className="relative min-h-[100svh] overflow-hidden pt-32 pb-16 sm:pt-40 sm:pb-20 lg:pt-48 lg:pb-24 flex items-center">
       <div className="absolute inset-0 -z-10 bg-hero-glow" />
       <motion.img src={heroBg} alt="" aria-hidden style={{ y: yImg }}
         className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-40 mix-blend-screen" />
@@ -377,13 +377,13 @@ function Hero() {
       <div className="pointer-events-none absolute left-[8%] top-[30%] h-24 w-24 rounded-3xl bg-gradient-brand opacity-40 blur-2xl animate-float" />
       <div className="pointer-events-none absolute right-[10%] top-[20%] h-32 w-32 rounded-full bg-accent/50 blur-2xl animate-float" style={{ animationDelay: "1s" }} />
 
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-8">
-        <div className="order-2 lg:order-1 text-center lg:text-left">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-8 w-full">
+        <div className="text-center lg:text-left">
           <div data-hero-badge className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-[10px] sm:text-xs uppercase tracking-[0.2em] text-foreground/80">
             <Sparkles className="h-3.5 w-3.5 text-[color:var(--cyan)]" /> Websites · Apps · AI · Marketing
           </div>
 
-          <h1 className="mt-6 text-[clamp(1.6rem,4.2vw,3.2rem)] font-bold leading-[1.1] tracking-tight">
+          <h1 className="mt-6 text-[clamp(2.0rem,6vw,3.6rem)] font-bold leading-[1.1] tracking-tight">
             {"Stop losing customers to".split(" ").map((w, i) => (
               <span key={i} data-hero-word className="mr-2 sm:mr-3 inline-block">{w}</span>
             ))}
@@ -397,7 +397,7 @@ function Hero() {
 
           <ul className="mx-auto lg:mx-0 mt-6 grid max-w-xl grid-cols-1 gap-2 text-sm sm:grid-cols-2">
             {bullets.map(b => (
-              <li key={b} data-hero-bullet className="flex items-center gap-2 text-foreground/80">
+              <li key={b} data-hero-bullet className="flex items-center justify-center lg:justify-start gap-2 text-foreground/80">
                 <span className="grid h-5 w-5 place-items-center rounded-full bg-gradient-brand text-white"><Check className="h-3 w-3" /></span>
                 {b}
               </li>
@@ -418,7 +418,7 @@ function Hero() {
             No obligation · Free consultation · Custom growth roadmap
           </p>
 
-          <div id="trust" className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 border-t border-white/5 pt-6 sm:pt-8 sm:grid-cols-4 text-left">
+          <div id="trust" className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 border-t border-white/5 pt-6 sm:pt-8 sm:grid-cols-4 text-center lg:text-left">
             {[
               { n: 100, s: "+", l: "Projects" },
               { n: 98, s: "%", l: "Satisfaction" },
@@ -433,30 +433,30 @@ function Hero() {
           </div>
         </div>
 
-        <div className="order-1 lg:order-2 relative flex items-center justify-center [perspective:1200px]">
+        <div className="relative flex items-center justify-center [perspective:1200px] w-full">
           <div className="pointer-events-none absolute inset-0 -z-10">
             <div className="absolute left-1/2 top-1/2 h-[280px] w-[280px] sm:h-[420px] sm:w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-brand opacity-30 blur-3xl" />
           </div>
-          <div ref={imgWrap} className="relative w-full max-w-[340px] sm:max-w-[460px] lg:max-w-[560px] will-change-transform">
+          <div ref={imgWrap} className="relative w-full max-w-[280px] sm:max-w-[420px] lg:max-w-[500px] will-change-transform">
             <img src={heroVisual} alt="Explisoft growth dashboard" width={1024} height={1024}
-              className="h-auto w-full drop-shadow-[0_30px_60px_rgba(0,50,250,0.35)]" />
-            <div className="glass absolute left-3 sm:-left-8 top-6 sm:top-10 flex items-center gap-2 rounded-2xl px-2 py-1 sm:px-3 sm:py-2 text-[10px] sm:text-xs shadow-glow">
-              <TrendingUp className="h-4 w-4 text-[color:var(--cyan)]" />
+              className="h-auto w-full drop-shadow-[0_20px_45px_rgba(0,50,250,0.3)]" />
+            <div className="glass absolute left-1 sm:-left-6 top-6 sm:top-10 flex items-center gap-1.5 sm:gap-2 rounded-2xl px-2 py-1 sm:px-3 sm:py-2 text-[9px] sm:text-xs shadow-glow">
+              <TrendingUp className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[color:var(--cyan)]" />
               <span><b>+185%</b> leads</span>
             </div>
-            <div className="glass absolute right-3 sm:-right-6 top-1/3 flex items-center gap-2 rounded-2xl px-2 py-1 sm:px-3 sm:py-2 text-[10px] sm:text-xs shadow-glow">
-              <Star className="h-4 w-4 text-[color:var(--magenta)]" />
+            <div className="glass absolute right-1 sm:-right-4 top-1/3 flex items-center gap-1.5 sm:gap-2 rounded-2xl px-2 py-1 sm:px-3 sm:py-2 text-[9px] sm:text-xs shadow-glow">
+              <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[color:var(--magenta)]" />
               <span><b>4.9/5</b> rated</span>
             </div>
-            <div className="glass absolute -bottom-2 sm:-bottom-4 left-4 sm:left-6 flex items-center gap-2 rounded-2xl px-2 py-1 sm:px-3 sm:py-2 text-[10px] sm:text-xs shadow-glow">
-              <Zap className="h-4 w-4 text-[color:var(--cyan)]" />
+            <div className="glass absolute -bottom-1 sm:-bottom-3 left-4 sm:left-6 flex items-center gap-1.5 sm:gap-2 rounded-2xl px-2 py-1 sm:px-3 sm:py-2 text-[9px] sm:text-xs shadow-glow">
+              <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[color:var(--cyan)]" />
               <span>14-day delivery</span>
             </div>
           </div>
         </div>
       </div>
 
-      <motion.div className="absolute inset-x-0 bottom-6 flex justify-center" animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
+      <motion.div className="absolute inset-x-0 bottom-6 flex justify-center pointer-events-none" animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
         <ChevronDown className="h-6 w-6 text-foreground/40" />
       </motion.div>
     </section>
