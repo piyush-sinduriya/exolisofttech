@@ -2,7 +2,9 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { Resend } from "resend";
 
-const ADMIN_EMAIL = "explisoft@gmail.com";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || process.env.TO_EMAIL || "explisoft@gmail.com";
+const FROM_EMAIL = process.env.FROM_EMAIL || "Explisoft Website <onboarding@resend.dev>";
+const CLIENT_FROM_EMAIL = process.env.CLIENT_FROM_EMAIL || process.env.FROM_EMAIL || "Explisoft Technology <onboarding@resend.dev>";
 
 const ContactSchema = z.object({
   name: z.string().min(2).max(100),
@@ -40,6 +42,7 @@ export const submitContact = createServerFn({ method: "POST" })
 
     // 1. Google Sheets + Apps Script Integration (SMTP-free way using user's Gmail account)
     const googleSheetUrl = process.env.GOOGLE_SHEET_WEBAPP_URL;
+    let sheetSubmissionId = submissionId;
     if (googleSheetUrl) {
       try {
         const response = await fetch(googleSheetUrl, {
@@ -58,7 +61,9 @@ export const submitContact = createServerFn({ method: "POST" })
         const resJson = await response.json() as { ok: boolean; submissionId?: string; error?: string };
         if (resJson && resJson.ok) {
           console.log("[contact] lead successfully processed by Google Sheet Script:", resJson.submissionId);
-          return { ok: true as const, submissionId: resJson.submissionId || submissionId, receivedAt: timestamp };
+          if (resJson.submissionId) {
+            sheetSubmissionId = resJson.submissionId;
+          }
         } else {
           console.error("[contact] Google Sheet Script returned error:", resJson.error);
         }
@@ -76,14 +81,14 @@ export const submitContact = createServerFn({ method: "POST" })
         // 1. Send Admin Notification Email
         try {
           await resend.emails.send({
-            from: "Explisoft Website <onboarding@resend.dev>",
+            from: FROM_EMAIL,
             to: [ADMIN_EMAIL],
             subject: `🔔 New Lead: ${data.name} — ${data.service || "General Inquiry"}`,
             html: `
               <div style="font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #e0e0e0; border-radius: 16px; overflow: hidden; border: 1px solid #222;">
                 <div style="background: linear-gradient(135deg, #6366f1, #06b6d4); padding: 24px 32px;">
                   <h1 style="margin: 0; font-size: 22px; color: white;">🚀 New Contact Form Submission</h1>
-                  <p style="margin: 4px 0 0; font-size: 13px; color: rgba(255,255,255,0.8);">Submission ID: ${submissionId}</p>
+                  <p style="margin: 4px 0 0; font-size: 13px; color: rgba(255,255,255,0.8);">Submission ID: ${sheetSubmissionId}</p>
                 </div>
                 <div style="padding: 28px 32px;">
                   <table style="width: 100%; border-collapse: collapse;">
@@ -129,7 +134,7 @@ export const submitContact = createServerFn({ method: "POST" })
               </div>
             `,
           });
-          console.log("[contact] admin email sent to", ADMIN_EMAIL, "for", submissionId);
+          console.log("[contact] admin email sent to", ADMIN_EMAIL, "for", sheetSubmissionId);
         } catch (adminEmailErr) {
           console.error("[contact] admin notification email send failed:", adminEmailErr);
         }
@@ -137,7 +142,7 @@ export const submitContact = createServerFn({ method: "POST" })
         // 2. Send Client Auto-Reply Email
         try {
           await resend.emails.send({
-            from: "Explisoft Technology <onboarding@resend.dev>",
+            from: CLIENT_FROM_EMAIL,
             to: [data.email],
             subject: `✨ Explisoft — Thank you for your inquiry, ${data.name}!`,
             html: `
@@ -242,7 +247,7 @@ export const submitContact = createServerFn({ method: "POST" })
                   <p style="margin: 0 0 12px;">Websites · Mobile Apps · AI Automation · Digital Marketing</p>
                   <div style="margin: 12px 0; border-top: 1px dashed #1f2833; padding-top: 12px;">
                     📞 +91 9650680558 · +91 7283038128<br />
-                    📧 <a href="mailto:explisoft@gmail.com" style="color: #06b6d4; text-decoration: none;">explisoft@gmail.com</a>
+                    📧 <a href="mailto:${ADMIN_EMAIL}" style="color: #06b6d4; text-decoration: none;">${ADMIN_EMAIL}</a>
                   </div>
                   <p style="margin: 8px 0 0; font-size: 10px; color: #444;">
                     © ${new Date().getFullYear()} Explisoft Technology. All rights reserved.
@@ -251,7 +256,7 @@ export const submitContact = createServerFn({ method: "POST" })
               </div>
             `,
           });
-          console.log("[contact] client email sent to", data.email, "for", submissionId);
+          console.log("[contact] client email sent to", data.email, "for", sheetSubmissionId);
         } catch (clientEmailErr) {
           // Log client email error but don't fail the form submission (useful for Sandbox limits)
           console.warn("[contact] client auto-reply email failed to send:", clientEmailErr);
@@ -263,7 +268,7 @@ export const submitContact = createServerFn({ method: "POST" })
       console.warn("[contact] RESEND_API_KEY not set — emails not sent. Lead logged to console only.");
     }
 
-    return { ok: true as const, submissionId, receivedAt: timestamp };
+    return { ok: true as const, submissionId: sheetSubmissionId, receivedAt: timestamp };
   });
 
 const NewsletterSchema = z.object({ email: z.string().email().max(200) });
@@ -280,7 +285,7 @@ export const subscribeNewsletter = createServerFn({ method: "POST" })
       try {
         const resend = new Resend(resendApiKey);
         await resend.emails.send({
-          from: "Explisoft Website <onboarding@resend.dev>",
+          from: FROM_EMAIL,
           to: [ADMIN_EMAIL],
           subject: `📬 New Newsletter Subscriber: ${data.email}`,
           html: `
