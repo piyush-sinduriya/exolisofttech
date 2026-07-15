@@ -351,7 +351,7 @@ function Hero() {
         .from("[data-hero-word]", { y: 80, opacity: 0, duration: 0.9, stagger: 0.07 }, "-=0.3")
         .from("[data-hero-sub]", { y: 20, opacity: 0, duration: 0.7 }, "-=0.5")
         .from("[data-hero-bullet]", { y: 14, opacity: 0, duration: 0.5, stagger: 0.08 }, "-=0.4")
-        .from("[data-hero-cta] > *", { y: 20, opacity: 0, duration: 0.6, stagger: 0.1 }, "-=0.3");
+        .from("[data-hero-cta-item]", { y: 20, opacity: 0, duration: 0.6, stagger: 0.1 }, "-=0.3");
       if (imgWrap.current) {
         gsap.from(imgWrap.current, { scale: 0.85, opacity: 0, duration: 1.2, ease: "power3.out", delay: 0.3 });
         gsap.to(imgWrap.current, { y: -20, duration: 3.5, repeat: -1, yoyo: true, ease: "sine.inOut" });
@@ -404,15 +404,19 @@ function Hero() {
             ))}
           </ul>
 
-          <div data-hero-cta className="mt-8 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4">
-            <MagneticButton>
-              <Button asChild variant="brand" size="hero" className="w-full sm:w-auto">
-                <a href="#contact">Book your free strategy call <ArrowRight className="ml-2 h-4 w-4" /></a>
+          <div data-hero-cta className="mt-8 flex flex-col sm:flex-row sm:flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4">
+            <div data-hero-cta-item className="w-full sm:w-auto">
+              <MagneticButton>
+                <Button asChild variant="brand" size="hero" className="w-full sm:w-auto">
+                  <a href="#contact">Book your free strategy call <ArrowRight className="ml-2 h-4 w-4" /></a>
+                </Button>
+              </MagneticButton>
+            </div>
+            <div data-hero-cta-item className="w-full sm:w-auto">
+              <Button asChild variant="ghostGlass" size="hero" className="w-full sm:w-auto">
+                <a href="#services">Explore services</a>
               </Button>
-            </MagneticButton>
-            <Button asChild variant="ghostGlass" size="hero" className="w-full sm:w-auto">
-              <a href="#services">Explore services</a>
-            </Button>
+            </div>
           </div>
           <p className="mt-3 text-xs text-foreground/50 lg:text-left text-center">
             No obligation · Free consultation · Custom growth roadmap
