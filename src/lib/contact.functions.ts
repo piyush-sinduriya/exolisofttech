@@ -366,29 +366,72 @@ export const chatWithAI = createServerFn({ method: "POST" })
     // Smart rule-based dialogue engine fallback if API key is not configured yet
     if (!apiKey) {
       const msgLower = userMessage.toLowerCase();
-      let response = "Hi there! I am the Explisoft AI Assistant. How can I help you today?";
+      const words = msgLower.split(/\W+/);
       
-      if (msgLower.includes("price") || msgLower.includes("cost") || msgLower.includes("pricing") || msgLower.includes("budget")) {
-        response = "At Explisoft, we build tailored solutions based on your budget. General custom website development starts around $1,500. Could you share your email or phone number? Our strategy team will reach out with a detailed quote!";
-      } else if (msgLower.includes("service") || msgLower.includes("work") || msgLower.includes("do you do") || msgLower.includes("develop")) {
-        response = "We specialize in Premium Website Development, Mobile Apps (iOS & Android), AI Chatbot/Workflow Automation, and ROI-driven Digital Marketing. Which of these are you interested in?";
-      } else if (msgLower.includes("contact") || msgLower.includes("phone") || msgLower.includes("call") || msgLower.includes("number") || msgLower.includes("whatsapp")) {
-        response = "You can call or text us directly on WhatsApp at +91 9650680558. Alternatively, leave your email here and we'll contact you within 24 hours!";
-      } else if (msgLower.includes("email") || msgLower.includes("mail")) {
-        response = "You can email us at explisoft@gmail.com. We reply to all inquiries within 24 hours!";
-      } else if (msgLower.includes("office") || msgLower.includes("location") || msgLower.includes("where")) {
-        response = "Our office is located in Laxmi Nagar, Delhi, India. However, we deliver high-performance digital projects to clients worldwide!";
-      } else if (msgLower.includes("hello") || msgLower.includes("hi") || msgLower.includes("hey")) {
-        response = "Hello! I am Explisoft's virtual AI assistant. I can answer questions about our software development services, pricing, process, or help you book a free strategy call. What's on your mind?";
-      } else if (msgLower.includes("thanks") || msgLower.includes("thank you")) {
-        response = "You're very welcome! Let me know if you need anything else.";
-      } else if (msgLower.includes("name") || msgLower.includes("who are you")) {
-        response = "I am the Explisoft AI Agent, built to help you navigate our services. I'd love to help you build your next website, app, or automation workflow!";
-      } else {
-        response = "That sounds interesting! Please leave your email or phone number here, and a human expert from Explisoft will contact you directly to discuss this in detail.";
+      const KNOWLEDGE_BASE = [
+        {
+          keywords: ["hello", "hi", "hey", "greetings", "namaste", "good morning", "good evening", "yo"],
+          response: "Hello! I am the Explisoft AI Assistant. I can answer questions about website development, mobile apps, AI automation, pricing, or help you book a free strategy call. What's on your mind today?"
+        },
+        {
+          keywords: ["website", "web", "design", "development", "developer", "html", "react", "site", "wordpress", "page", "portfolio"],
+          response: "Explisoft builds high-performance, premium websites. We specialize in custom React/Vite development, modern landing pages, e-commerce stores, and headless CMS integrations. All websites are fully responsive, super fast, and optimized for SEO. Do you have a specific website project in mind?"
+        },
+        {
+          keywords: ["app", "apps", "mobile", "ios", "android", "react native", "flutter", "phone", "apk", "playstore", "appstore"],
+          response: "We develop premium native mobile applications for both iOS and Android platforms using React Native and Flutter. We manage the entire lifecycle from UI/UX design to publishing on the Apple App Store and Google Play Store. What kind of app are you looking to build?"
+        },
+        {
+          keywords: ["automation", "ai", "workflow", "chatbot", "crm", "zapier", "make", "integrate", "bot", "assistant"],
+          response: "We build custom AI chatbots, workflow automation pipelines (using Make/Zapier), and CRM integrations that save your business hundreds of hours. We can automate lead generation, customer support, and database synchronization. What manual processes would you like to automate?"
+        },
+        {
+          keywords: ["marketing", "seo", "digital", "ads", "google ads", "facebook ads", "lead", "roi", "sales", "ranking", "rank"],
+          response: "Our ROI-driven digital marketing services include SEO (Search Engine Optimization), Google & Meta Ads management, conversion rate optimization, and high-impact lead generation campaigns. We focus on scaling your sales, not just traffic!"
+        },
+        {
+          keywords: ["price", "cost", "pricing", "charge", "rate", "fee", "budget", "quote", "packages", "kitna", "charges", "rupay", "paise", "payment"],
+          response: "Since every project is custom-tailored, pricing depends on your requirements. Simple landing pages start around $1,000 (approx. ₹80,000), while complex custom web platforms or mobile apps range from $3,000 to $10,000+. We can work with various budgets—please leave your email/WhatsApp and project details so we can send a custom quote!"
+        },
+        {
+          keywords: ["contact", "phone", "call", "number", "email", "mail", "whatsapp", "address", "location", "office", "delhi", "reach", "laxmi nagar", "connect"],
+          response: "You can reach us directly:\n📞 **Phone/WhatsApp:** +91 9650680558 or +91 7283038128\n📧 **Email:** explisoft@gmail.com\n🏢 **Office:** Laxmi Nagar, Delhi, India.\n\nAlternatively, send us your email here and we will reach out to you within 24 hours!"
+        },
+        {
+          keywords: ["how", "process", "steps", "agreement", "timeline", "workflow", "method", "time"],
+          response: "Our process is simple and transparent:\n1️⃣ **Strategy Session:** We understand your business goals.\n2️⃣ **Proposal & Design:** We deliver a visual roadmap and pricing.\n3️⃣ **Development & Testing:** We build with weekly updates.\n4️⃣ **Launch & Handover:** We deploy and train your team.\n\nWe usually deliver websites in 2-4 weeks and mobile apps in 6-8 weeks."
+        },
+        {
+          keywords: ["who", "about", "explisoft", "company", "agency", "team", "owner"],
+          response: "Explisoft Technology is a premium digital agency based in Delhi, India. We build websites, apps, AI systems, and digital marketing campaigns for ambitious brands worldwide. We are a team of expert developers, designers, and marketing strategists focused on scaling businesses."
+        },
+        {
+          keywords: ["thank", "thanks", "great", "awesome", "perfect", "ok", "okay"],
+          response: "You're very welcome! I'm glad I could help. Let me know if you have any other questions about Explisoft, or if you'd like to book a strategy call!"
+        }
+      ];
+
+      let bestMatch = null;
+      let maxScore = 0;
+
+      for (const item of KNOWLEDGE_BASE) {
+        let score = 0;
+        for (const keyword of item.keywords) {
+          if (words.includes(keyword) || msgLower.includes(keyword)) {
+            score += 2;
+          }
+        }
+        if (score > maxScore) {
+          maxScore = score;
+          bestMatch = item;
+        }
       }
 
-      return { text: response };
+      const responseText = (bestMatch && maxScore >= 2)
+        ? bestMatch.response
+        : "I understand your query. Explisoft builds high-performance websites, mobile apps, and custom AI systems. To help you better, could you please drop your email or WhatsApp number here? An expert from our team will contact you directly within 24 hours to discuss!";
+
+      return { text: responseText };
     }
 
     try {
