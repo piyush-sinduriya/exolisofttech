@@ -347,3 +347,100 @@ export const subscribeNewsletter = createServerFn({ method: "POST" })
 
     return { ok: true as const };
   });
+
+const ChatSchema = z.object({
+  message: z.string().max(1000),
+  history: z.array(z.object({
+    role: z.enum(["user", "model"]),
+    text: z.string().max(2000)
+  })).optional().default([])
+});
+
+export const chatWithAI = createServerFn({ method: "POST" })
+  .inputValidator((data: unknown) => ChatSchema.parse(data))
+  .handler(async ({ data }) => {
+    const apiKey = process.env.GEMINI_API_KEY;
+    const userMessage = data.message.trim();
+    const history = data.history;
+
+    // Smart rule-based dialogue engine fallback if API key is not configured yet
+    if (!apiKey) {
+      const msgLower = userMessage.toLowerCase();
+      let response = "Hi there! I am the Explisoft AI Assistant. How can I help you today?";
+      
+      if (msgLower.includes("price") || msgLower.includes("cost") || msgLower.includes("pricing") || msgLower.includes("budget")) {
+        response = "At Explisoft, we build tailored solutions based on your budget. General custom website development starts around $1,500. Could you share your email or phone number? Our strategy team will reach out with a detailed quote!";
+      } else if (msgLower.includes("service") || msgLower.includes("work") || msgLower.includes("do you do") || msgLower.includes("develop")) {
+        response = "We specialize in Premium Website Development, Mobile Apps (iOS & Android), AI Chatbot/Workflow Automation, and ROI-driven Digital Marketing. Which of these are you interested in?";
+      } else if (msgLower.includes("contact") || msgLower.includes("phone") || msgLower.includes("call") || msgLower.includes("number") || msgLower.includes("whatsapp")) {
+        response = "You can call or text us directly on WhatsApp at +91 9650680558. Alternatively, leave your email here and we'll contact you within 24 hours!";
+      } else if (msgLower.includes("email") || msgLower.includes("mail")) {
+        response = "You can email us at explisoft@gmail.com. We reply to all inquiries within 24 hours!";
+      } else if (msgLower.includes("office") || msgLower.includes("location") || msgLower.includes("where")) {
+        response = "Our office is located in Laxmi Nagar, Delhi, India. However, we deliver high-performance digital projects to clients worldwide!";
+      } else if (msgLower.includes("hello") || msgLower.includes("hi") || msgLower.includes("hey")) {
+        response = "Hello! I am Explisoft's virtual AI assistant. I can answer questions about our software development services, pricing, process, or help you book a free strategy call. What's on your mind?";
+      } else if (msgLower.includes("thanks") || msgLower.includes("thank you")) {
+        response = "You're very welcome! Let me know if you need anything else.";
+      } else if (msgLower.includes("name") || msgLower.includes("who are you")) {
+        response = "I am the Explisoft AI Agent, built to help you navigate our services. I'd love to help you build your next website, app, or automation workflow!";
+      } else {
+        response = "That sounds interesting! Please leave your email or phone number here, and a human expert from Explisoft will contact you directly to discuss this in detail.";
+      }
+
+      return { text: response };
+    }
+
+    try {
+      const systemInstruction = 
+        "You are 'Explisoft AI Assistant', an intelligent, extremely professional, and friendly AI chatbot for Explisoft Technology (explisoft@gmail.com, +91 9650680558). " +
+        "Explisoft builds high-performance websites, custom mobile apps, AI automation pipelines, and marketing campaigns. " +
+        "Your goal is to answer visitor questions concisely, showcase Explisoft's expertise, and guide users to book a free 30-minute strategy call or fill out the contact form. " +
+        "Keep your responses short, under 3-4 sentences, and match our sleek, premium, and friendly tone. Always converse in English or Hindi/Hinglish depending on the user's preference.";
+
+      const contents = [
+        ...history.map(h => ({
+          role: h.role,
+          parts: [{ text: h.text }]
+        })),
+        {
+          role: "user",
+          parts: [{ text: userMessage }]
+        }
+      ];
+
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents,
+          systemInstruction: {
+            parts: [{ text: systemInstruction }]
+          },
+          generationConfig: {
+            maxOutputTokens: 300,
+            temperature: 0.7
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Gemini API returned status ${response.status}`);
+      }
+
+      const resJson = await response.json() as {
+        candidates?: Array<{
+          content?: {
+            parts?: Array<{ text?: string }>
+          }
+        }>
+      };
+
+      const text = resJson.candidates?.[0]?.content?.parts?.[0]?.text || "I apologize, I could not process your query at this moment. Please feel free to email us at explisoft@gmail.com!";
+      return { text };
+    } catch (err) {
+      console.error("[chat] AI generation error:", err);
+      return { text: "I'm having trouble connecting to my AI brain right now. Please message us on WhatsApp (+91 9650680558) or email explisoft@gmail.com for instant help!" };
+    }
+  });
+
