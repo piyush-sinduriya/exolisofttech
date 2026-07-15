@@ -303,7 +303,7 @@ function MagneticButton({ children }: { children: React.ReactNode }) {
     el.style.transform = `translate(${x * 0.2}px, ${y * 0.3}px)`;
   };
   const reset = () => { if (ref.current) ref.current.style.transform = "translate(0,0)"; };
-  return <div ref={ref} onMouseMove={onMove} onMouseLeave={reset} className="block w-full sm:inline-block sm:w-auto transition-transform duration-300">{children}</div>;
+  return <div ref={ref} onMouseMove={onMove} onMouseLeave={reset} className="flex items-center justify-center w-full sm:w-auto transition-transform duration-300">{children}</div>;
 }
 
 function Counter({ to, decimals = 0 }: { to: number; decimals?: number }) {
@@ -405,14 +405,14 @@ function Hero() {
           </ul>
 
           <div data-hero-cta className="mt-8 flex flex-col sm:flex-row sm:flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4">
-            <div data-hero-cta-item className="w-full sm:w-auto">
+            <div data-hero-cta-item className="flex items-center justify-center w-full sm:w-auto">
               <MagneticButton>
                 <Button asChild variant="brand" size="hero" className="w-full sm:w-auto">
                   <a href="#contact">Book your free strategy call <ArrowRight className="ml-2 h-4 w-4" /></a>
                 </Button>
               </MagneticButton>
             </div>
-            <div data-hero-cta-item className="w-full sm:w-auto">
+            <div data-hero-cta-item className="flex items-center justify-center w-full sm:w-auto">
               <Button asChild variant="ghostGlass" size="hero" className="w-full sm:w-auto">
                 <a href="#services">Explore services</a>
               </Button>
