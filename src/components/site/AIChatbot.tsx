@@ -9,6 +9,14 @@ interface Message {
   text: string;
 }
 
+const QUICK_OPTIONS = [
+  { label: "Website Dev 🌐", value: "Tell me about website development services." },
+  { label: "Mobile Apps 📱", value: "Tell me about custom mobile app development." },
+  { label: "AI Automation 🤖", value: "Tell me about AI and chatbot automation." },
+  { label: "Marketing 📈", value: "Tell me about ROI-driven digital marketing." },
+  { label: "Free Strategy Call 📞", value: "How do I book a free strategy call?" },
+];
+
 export default function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -23,6 +31,40 @@ export default function AIChatbot() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const sendChat = useServerFn(chatWithAI);
+
+  const handleOptionClick = async (optionValue: string) => {
+    if (isLoading) return;
+
+    setMessages((prev) => [...prev, { role: "user", text: optionValue }]);
+    setIsLoading(true);
+
+    try {
+      const historyPayload = messages.map((m) => ({
+        role: m.role,
+        text: m.text,
+      }));
+
+      const response = await sendChat({
+        data: {
+          message: optionValue,
+          history: historyPayload,
+        },
+      });
+
+      setMessages((prev) => [...prev, { role: "model", text: response.text }]);
+    } catch (err) {
+      console.error("[chatbot] failed to generate response from option click:", err);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "model",
+          text: "I experienced a brief server connection issue. Please feel free to call us at +91 9650680558 or email explisoft@gmail.com!",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -241,6 +283,21 @@ export default function AIChatbot() {
                 </div>
               )}
               <div ref={messagesEndRef} />
+            </div>
+
+            {/* Quick Options pills */}
+            <div className="flex flex-wrap gap-1.5 px-4 py-2 border-t border-white/5 bg-black/20 max-h-[85px] overflow-y-auto">
+              {QUICK_OPTIONS.map((opt, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  disabled={isLoading}
+                  onClick={() => handleOptionClick(opt.value)}
+                  className="rounded-full bg-white/5 border border-white/10 px-2.5 py-1 text-xs text-foreground/80 hover:bg-gradient-brand hover:text-white hover:border-transparent transition-all duration-200 cursor-pointer active:scale-95 disabled:opacity-50"
+                >
+                  {opt.label}
+                </button>
+              ))}
             </div>
 
             {/* Input Submission Bar Footer */}
