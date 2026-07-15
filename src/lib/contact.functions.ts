@@ -96,11 +96,16 @@ export const submitContact = createServerFn({ method: "POST" })
             submission_id: sheetSubmissionId,
           }),
         });
-        const resJson = await response.json() as { success: boolean; message?: string };
-        if (resJson && resJson.success) {
-          console.log("[contact] lead successfully processed by Web3Forms");
-        } else {
-          console.error("[contact] Web3Forms returned error:", resJson.message);
+        const responseText = await response.text();
+        try {
+          const resJson = JSON.parse(responseText) as { success: boolean; message?: string };
+          if (resJson && resJson.success) {
+            console.log("[contact] lead successfully processed by Web3Forms");
+          } else {
+            console.error("[contact] Web3Forms returned error:", resJson.message);
+          }
+        } catch {
+          console.error("[contact] Web3Forms returned non-JSON response:", responseText.slice(0, 200));
         }
       } catch (err) {
         console.error("[contact] Web3Forms request failed:", err);
